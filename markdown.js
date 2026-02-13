@@ -28,6 +28,34 @@ function formatDateOnly(iso) {
 }
 
 /**
+ * Extract quoted record info from a post's embed, if present.
+ * Returns { text, handle } or null.
+ */
+function quotedRecord(post) {
+  const embed = post?.embed;
+  if (!embed) return null;
+
+  let record = null;
+
+  if (embed.$type === 'app.bsky.embed.record#view') {
+    record = embed.record;
+  } else if (embed.$type === 'app.bsky.embed.recordWithMedia#view') {
+    record = embed.record?.record;
+  }
+
+  if (!record || record.$type === 'app.bsky.embed.record#viewNotFound' ||
+      record.$type === 'app.bsky.embed.record#viewBlocked') {
+    return null;
+  }
+
+  const text = record.value?.text || '';
+  const handle = record.author?.handle || 'unknown';
+  if (!text) return null;
+
+  return { text, handle };
+}
+
+/**
  * Build image markdown for a post's embed, depending on media option.
  * Returns an array of lines to append to the post block.
  *
@@ -101,6 +129,18 @@ function renderPost(post, options, imageMap) {
   const textLines = text.split('\n');
   for (const line of textLines) {
     lines.push(`${prefix}${line}`);
+  }
+
+  // Quoted post
+  const quote = quotedRecord(post);
+  if (quote) {
+    lines.push(prefix.trimEnd());
+    const quoteLines = quote.text.split('\n');
+    for (const ql of quoteLines) {
+      lines.push(`${prefix}> ${ql}`);
+    }
+    lines.push(`${prefix}>`);
+    lines.push(`${prefix}> — @${quote.handle}`);
   }
 
   // Media

@@ -160,4 +160,4 @@ Static files served from GitHub Pages CDN — negligible bandwidth. All API call
 - Obsidian plugin (paste-to-expand: paste a bsky.app URL, plugin fetches and inserts the thread)
 - Android Share intent / Tasker integration
 - Batch archiving (multiple URLs)
-- Quote post expansion (inline quoted posts)
+- ~~Quote post expansion (inline quoted posts)~~ ✓ implemented
