@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bluesky Thread Archiver</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Bluesky Thread Archiver</h1>
+    <p class="subtitle">Convert a Bluesky thread to Obsidian-friendly Markdown.</p>
+
+    <section class="input-section">
+      <label for="url-input">Bluesky post URL</label>
+      <input
+        type="url"
+        id="url-input"
+        placeholder="https://bsky.app/profile/handle/post/rkey"
+        autocomplete="off"
+        spellcheck="false"
+      >
+    </section>
+
+    <section class="options-section">
+      <h2>Options</h2>
+
+      <div class="option-row">
+        <label for="opt-media">Media</label>
+        <select id="opt-media">
+          <option value="none">None</option>
+          <option value="inline" selected>Inline (CDN links)</option>
+          <option value="download">Download (zip with images)</option>
+        </select>
+      </div>
+
+      <div class="option-row">
+        <label for="opt-format">Format</label>
+        <select id="opt-format">
+          <option value="minimal">Minimal</option>
+          <option value="rich">Rich (YAML frontmatter)</option>
+        </select>
+      </div>
+    </section>
+
+    <button id="archive-btn">Archive</button>
+
+    <section id="output-section" class="output-section hidden">
+      <div class="output-actions">
+        <button id="copy-btn">Copy Markdown</button>
+        <button id="download-btn">Download .md</button>
+      </div>
+      <pre id="output-preview"></pre>
+    </section>
+
+    <div id="error-msg" class="error hidden"></div>
+    <div id="loading-msg" class="loading hidden">Fetching thread...</div>
+  </main>
+
+  <script src="bsky-api.js"></script>
+  <script src="markdown.js"></script>
+  <script src="media.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+/* style.css — Bluesky Thread Archiver */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-bg: #f9f9f9;
+  --color-surface: #ffffff;
+  --color-border: #ddd;
+  --color-accent: #0085ff;
+  --color-accent-hover: #0066cc;
+  --color-text: #1a1a1a;
+  --color-muted: #555;
+  --color-error-bg: #fff0f0;
+  --color-error-text: #c00;
+  --font-mono: 'Courier New', Courier, monospace;
+  --radius: 6px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  margin: 0;
+  padding: 1rem;
+  min-height: 100vh;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 0 0 0.25rem;
+}
+
+.subtitle {
+  color: var(--color-muted);
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+/* --- Input --- */
+
+.input-section {
+  margin-bottom: 1.25rem;
+}
+
+.input-section label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+}
+
+input[type="url"] {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-family: var(--font-mono);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+input[type="url"]:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+/* --- Options --- */
+
+.options-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.options-section h2 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+  margin: 0 0 0.75rem;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.option-row:last-child {
+  margin-bottom: 0;
+}
+
+.option-row label {
+  width: 5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+select {
+  flex: 1;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+/* --- Buttons --- */
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.65rem 1.25rem;
+  transition: background 0.15s;
+}
+
+#archive-btn {
+  background: var(--color-accent);
+  color: #fff;
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+#archive-btn:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+#archive-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.output-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.output-actions button {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.output-actions button:hover {
+  background: var(--color-bg);
+}
+
+/* --- Output preview --- */
+
+.output-section {
+  margin-top: 0.5rem;
+}
+
+#output-preview {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 60vh;
+  overflow-y: auto;
+  margin: 0;
+}
+
+/* --- Status messages --- */
+
+.error {
+  background: var(--color-error-bg);
+  color: var(--color-error-text);
+  border: 1px solid #ffcccc;
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+}
+
+.loading {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 0.75rem;
+}
+
+.hidden {
+  display: none;
+}
+
+/* --- Responsive tweaks --- */
+
+@media (max-width: 480px) {
+  .option-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  .option-row label {
+    width: auto;
+  }
+  select {
+    width: 100%;
+  }
+}
