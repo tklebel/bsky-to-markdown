@@ -6,9 +6,11 @@ A static web app that converts Bluesky threads into Obsidian-friendly Markdown. 
 
 ---
 
-## What it does
+## How to use
 
-Paste a Bluesky post URL, choose your options, hit **Archive**. You get a Markdown preview you can copy or download — ready to paste into Obsidian or any other editor.
+**On desktop:** Open the [live app](https://tklebel.github.io/bsky-archiver/), paste a Bluesky post URL, choose your options, and hit **Turn into Markdown**. You get a Markdown preview you can copy or download — ready to paste into Obsidian or any other editor.
+
+**On mobile:** The app also integrates with your phone's share sheet, so you can archive a thread directly from the Bluesky app without copying any URLs. See [Mobile share sheet](#mobile-share-sheet) below for setup.
 
 Only the original author's self-reply chain is captured. Other people's replies are ignored. The goal is the author's thread as a document, not the surrounding conversation.
 
@@ -66,6 +68,39 @@ tags: [bluesky-archive]
 > — @alice.bsky.social · 2025-02-10 14:32 · ♡ 42 · ↻ 12
 ```
 
+## Mobile share sheet
+
+The app can be added to your phone's share sheet, so archiving a thread is just: **Share → Bsky Archive → Copy Markdown**. No need to copy-paste URLs.
+
+Technically, this works via a `?url=` query parameter — if the URL contains a Bluesky post, the app auto-populates the input and starts archiving immediately.
+
+### Android (Chrome PWA)
+
+Chrome supports the [Web Share Target API](https://developer.chrome.com/docs/capabilities/web-apis/web-share-target), so the app can appear directly in Android's share sheet. Chrome is only needed for the one-time install — after that, the share target works from any app.
+
+**One-time setup (in Chrome):**
+
+1. Open the hosted app in Chrome on Android
+2. Tap the Chrome menu → **Add to Home Screen** → **install** when prompted
+
+**Usage (from any app):**
+
+1. In the Bluesky app, tap **Share** on a post
+2. Pick **Bsky Archive** from the share sheet
+3. The archiver opens and immediately starts fetching
+4. Tap **Copy Markdown** → paste into Obsidian
+
+### iOS (Apple Shortcut)
+
+iOS doesn't support Web Share Target (not even in Chrome, which uses Safari's engine under the hood). You can get a similar workflow using Apple Shortcuts:
+
+1. Open the **Shortcuts** app → tap **+** to create a new shortcut
+2. Set it to accept **URLs** from the **Share Sheet**
+3. Add an **Open URL** action with: `https://tklebel.github.io/bsky-archiver/?url={Shortcut Input}`
+4. Name it "Bsky Archive" and save
+
+Then from the Bluesky app, tap **Share** → **Bsky Archive**, and Safari opens with the URL pre-filled.
+
 ## How it works
 
 1. Parse the Bluesky URL → extract handle and post ID
@@ -88,24 +123,6 @@ python3 -m http.server 8080
 Then open http://localhost:8080 in your browser.
 
 
-## Android share sheet (PWA)
-
-The app supports the [Web Share Target API](https://developer.chrome.com/docs/capabilities/web-apis/web-share-target), so it can appear in Android's share sheet directly from the Bluesky app.
-
-**One-time setup:**
-
-1. Open the hosted app in Chrome on Android (e.g. `https://tklebel.github.io/bsky-archiver/`)
-2. Tap the Chrome menu → **Add to Home Screen** → **Install**
-
-After that, "Bsky Archive" appears in the system share menu. The workflow is:
-
-1. In the Bluesky app, tap **Share** on any post
-2. Pick **Bsky Archive** from the share sheet
-3. The archiver opens with the URL pre-filled and immediately starts fetching
-4. Tap **Copy Markdown** → paste into Obsidian
-
-> **Note:** An icon is not currently included in the repo, so Chrome may show a generic icon on the home screen. Add a `192×192` and `512×512` PNG and reference them in `manifest.json` under `"icons"` to fix that.
-
 ## Self-hosting / GitHub Pages
 
 This is a zero-dependency static site (plain HTML + CSS + JS, no build step). To host your own copy:
@@ -119,12 +136,15 @@ The only external dependency loaded at runtime is [JSZip](https://stashbox.org/3
 ## File structure
 
 ```
-index.html     — UI
-style.css      — Styles
-app.js         — UI logic, option persistence
-bsky-api.js    — URL parsing, API calls, thread walking
-markdown.js    — Thread → Markdown conversion
-media.js       — Image download + zip generation
+index.html      — UI
+style.css       — Styles
+app.js          — UI logic, option persistence, share target handling
+bsky-api.js     — URL parsing, API calls, thread walking
+markdown.js     — Thread → Markdown conversion
+media.js        — Image download + zip generation
+manifest.json   — PWA manifest (share target, icons)
+sw.js           — Service worker (required for PWA installability)
+icon.svg        — App icon
 ```
 
 ## License
