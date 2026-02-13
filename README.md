@@ -88,6 +88,24 @@ python3 -m http.server 8080
 Then open http://localhost:8080 in your browser.
 
 
+## Android share sheet (PWA)
+
+The app supports the [Web Share Target API](https://developer.chrome.com/docs/capabilities/web-apis/web-share-target), so it can appear in Android's share sheet directly from the Bluesky app.
+
+**One-time setup:**
+
+1. Open the hosted app in Chrome on Android (e.g. `https://tklebel.github.io/bsky-archiver/`)
+2. Tap the Chrome menu → **Add to Home Screen** → **Install**
+
+After that, "Bsky Archive" appears in the system share menu. The workflow is:
+
+1. In the Bluesky app, tap **Share** on any post
+2. Pick **Bsky Archive** from the share sheet
+3. The archiver opens with the URL pre-filled and immediately starts fetching
+4. Tap **Copy Markdown** → paste into Obsidian
+
+> **Note:** An icon is not currently included in the repo, so Chrome may show a generic icon on the home screen. Add a `192×192` and `512×512` PNG and reference them in `manifest.json` under `"icons"` to fix that.
+
 ## Self-hosting / GitHub Pages
 
 This is a zero-dependency static site (plain HTML + CSS + JS, no build step). To host your own copy:

@@ -1,0 +1,17 @@
+{
+  "name": "Bluesky Thread Archiver",
+  "short_name": "Bsky Archive",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "theme_color": "#0085ff",
+  "background_color": "#ffffff",
+  "share_target": {
+    "action": ".",
+    "method": "GET",
+    "params": {
+      "url": "url",
+      "text": "text"
+    }
+  }
+}

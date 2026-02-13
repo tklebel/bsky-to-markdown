@@ -184,3 +184,15 @@ downloadBtn.addEventListener('click', async () => {
 // --- Init ---
 loadOptions();
 updateDownloadLabel();
+
+// Handle URL shared via Web Share Target API (Android share sheet)
+// The share target is configured in manifest.json to pass the shared URL
+// as a ?url= query param (or ?text= if the sharing app sends it as text).
+(function handleSharedUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const shared = (params.get('url') || params.get('text') || '').trim();
+  if (shared && shared.includes('bsky.app')) {
+    urlInput.value = shared;
+    archiveBtn.click();
+  }
+})();
