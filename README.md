@@ -76,6 +76,18 @@ tags: [bluesky-archive]
 
 No API keys. No authentication. No server. All requests go from your browser directly to Bluesky's public API.
 
+## Running locally
+
+Since this is a plain static site with no build step, any simple HTTP server works. From the repo root:
+
+```bash
+# Python (usually pre-installed)
+python3 -m http.server 8080
+```
+
+Then open http://localhost:8080 in your browser.
+
+
 ## Self-hosting / GitHub Pages
 
 This is a zero-dependency static site (plain HTML + CSS + JS, no build step). To host your own copy:
